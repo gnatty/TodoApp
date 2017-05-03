@@ -1,0 +1,14 @@
+.section-button {
+  background-color: #00d1b2;
+}
+
+.icon-right {
+  text-align: right;
+}
+
+.navbartodo {
+  padding: 1.5rem;
+  box-shadow: 0 2px 3px rgba(10, 10, 10, 0.1);
+  z-index: 999;
+  position: relative;
+}

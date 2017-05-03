@@ -1,0 +1,12 @@
+body {
+  margin: 0;
+  padding: 0;
+  font-family: sans-serif;
+  background: #313f4d;
+}
+
+.settingsItem {
+  float: right;
+  padding-left: 7px;
+  cursor: pointer;
+}
