@@ -7,7 +7,7 @@ const bodyParser = require('body-parser')
 // Files
 const routes = require('./routes')
 
-mongoose.connect('mongodb://localhost/test')
+mongoose.connect('mongodb://localhost:3300/database')
 
 mongoose.connection.on('connected', () => {
   console.log('Mongoose default connection opened')
