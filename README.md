@@ -1,5 +1,7 @@
 # TodoList
 
+![](https://raw.githubusercontent.com/muporash/TodoList-with-React-and-Express-CRUD/master/docs/img/app.png)
+
 # Start app
 
 ## On MacOs
