@@ -1,29 +1,45 @@
 import React, { Component } from 'react'
 import './Todo.css'
-import TodoButtonAdd from './Todo.button.add'
 import TodoItem from './Todo.item'
-import TodoController from './Todo.controller'
+
+import TodosActions from '../../actions/TodosActions'
+import TodosStore from '../../stores/TodosStore'
+
+
+
 class Todo extends Component {
 
   constructor(props) {
     super(props)
 
     this.state = {
-      todos: [],
-      handler: this
+      todos: []
     }
+
+    this.onChange = this.onChange.bind(this)
   }
 
   componentWillMount() {
-    TodoController.getAll(this)
+    TodosStore.addChangeListener(this.onChange)
+  }
+
+  componentDidMount() {
+    TodosActions.getAll()
+  }
+
+  componentWillUnmount() {
+    TodosStore.removeChangeListener(this.onChange);
+  }
+
+  onChange() {
+    this.setState({
+      todos: TodosStore.getTodos()
+    })
   }
 
   render() {
     return (
       <div className="Todo">
-        <TodoButtonAdd
-        handler={this.state.handler}
-        />
         <div className="container section">
           <div className="columns">
             <div className="column is-12">
