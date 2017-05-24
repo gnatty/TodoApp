@@ -10,7 +10,7 @@ const TodoController = {
   },
 
   getAll: (req, res) => {
-    let query = todo.find().select('todoId description')
+    let query = todo.find().select('todoId description').sort({ todoId: -1 })
     query.exec((err, todos) => {
       let nextCursor = todos.length
       if (todos.length == maxItemsPerPage) nextCursor +1

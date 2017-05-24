@@ -1,31 +1,29 @@
 import React, { Component } from 'react'
-import TodoController from './Todo.controller'
+
+import TodosActions from '../../actions/TodosActions'
+import TodosStore from '../../stores/TodosStore'
 
 class TodoButtonAdd extends Component {
 
   constructor(props) {
     super(props)
 
+    this.onChange = this.onChange.bind(this)
     this.handleChange = this.handleChange.bind(this)
     this.createTodo = this.createTodo.bind(this)
-    this.todosLength = this.todosLength.bind(this)
 
     this.state = {
       description: ''
     }
 
   }
-  todosLength() {
-    let tl = this.props.handler.state.todos.length
-    if (tl > 0) {
-      return (
-        <strong>{tl} posts</strong>
-      )
-    } else {
-      return (
-        <strong>0 post</strong>
-      )
-    }
+
+  componentWillMount() {
+    TodosStore.addChangeListener(this.onChange)
+  }
+
+  componentWillUnmount() {
+    TodosStore.removeChangeListener(this.onChange);
   }
 
   handleChange(e) {
@@ -35,7 +33,11 @@ class TodoButtonAdd extends Component {
   }
 
   createTodo() {
-    TodoController.create(this.state.description, this.props.handler)
+    TodosActions.create(this.state.description)
+  }
+
+  onChange() {
+
   }
 
   render() {
@@ -44,7 +46,7 @@ class TodoButtonAdd extends Component {
         <nav className="level">
         <div className="level-left">
           <div className="level-item">
-            <p className="subtitle is-5">{this.todosLength()}</p>
+            <p className="subtitle is-5">0 post</p>
           </div>
           <div className="level-item">
             <div className="field has-addons">

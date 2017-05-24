@@ -10,6 +10,16 @@ function setTodos(todos) {
   _todos = todos
 }
 
+function pushTodo(todo) {
+  _todos.unshift(todo)
+}
+
+function deleteTodo(todoId) {
+  _todos = _todos.filter(function(el) {
+    return el.todoId !== todoId
+  })
+}
+
 class TodosStoreClass extends EventEmitter {
 
   emitChange() {
@@ -44,6 +54,26 @@ TodosStore.dispatchToken = AppDispatcher.register(action => {
     case TodosConstants.GET_ALL_ERROR:
       alert(action.message)
       TodosStore.emitChange();
+    break;
+
+    case TodosConstants.CREATE:
+      pushTodo(action.todo)
+      TodosStore.emitChange()
+    break;
+
+    case TodosConstants.CREATE_ERROR:
+      // (..)
+      TodosStore.emitChange()
+    break;
+
+    case TodosConstants.DELETE:
+      deleteTodo(action.todoId)
+      TodosStore.emitChange()
+    break;
+
+    case TodosConstants.DELETE_ERROR:
+      // (..)
+      TodosStore.emitChange()
     break;
 
     default:

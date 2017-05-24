@@ -1,17 +1,32 @@
 import React, { Component } from 'react'
-import TodoController from './Todo.controller'
+
+import TodosActions from '../../actions/TodosActions'
+import TodosStore from '../../stores/TodosStore'
 
 class TodoItem extends Component {
 
   constructor(props) {
     super(props)
+
+    this.onChange = this.onChange.bind(this)
     this.delete = this.delete.bind(this)
   }
 
-  delete() {
-    TodoController.delete(this.props.todo.todoId, this.props.handler)
+  componentWillMount() {
+    TodosStore.addChangeListener(this.onChange)
   }
 
+  componentWillUnmount() {
+    TodosStore.removeChangeListener(this.onChange);
+  }
+
+  delete() {
+    TodosActions.delete(this.props.todo.todoId)
+  }
+
+  onChange() {
+
+  }
 
   render() {
     return (

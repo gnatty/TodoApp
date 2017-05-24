@@ -28,6 +28,48 @@ export default {
         })
       }
     })
+  },
+
+  create: (description) => {
+    request
+    .post(tc.host + tc.create)
+    .send({
+      description: description
+    })
+    .end(function(err, data){
+      if(err) {
+        AppDispatcher.dispatch({
+          actionType: TodosConstants.CREATE_ERROR,
+          message: err
+        })
+      } else {
+        AppDispatcher.dispatch({
+          actionType: TodosConstants.CREATE,
+          todo: data.body
+        })
+      }
+    })
+  },
+
+  delete: (todoId) => {
+    request
+    .post(tc.host + tc.delete)
+    .send({
+      todoId: todoId
+    })
+    .end(function(err, data){
+      if(err) {
+        AppDispatcher.dispatch({
+          actionType: TodosConstants.DELETE_ERROR,
+          message: err
+        })
+      } else {
+        AppDispatcher.dispatch({
+          actionType: TodosConstants.DELETE,
+          todoId: todoId
+        })
+      }
+    })
   }
 
 }

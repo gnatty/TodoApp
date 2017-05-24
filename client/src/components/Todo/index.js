@@ -5,7 +5,7 @@ import TodoItem from './Todo.item'
 import TodosActions from '../../actions/TodosActions'
 import TodosStore from '../../stores/TodosStore'
 
-
+import TodoButtonAdd from './Todo.button.add'
 
 class Todo extends Component {
 
@@ -40,9 +40,14 @@ class Todo extends Component {
   render() {
     return (
       <div className="Todo">
+
+        <TodoButtonAdd></TodoButtonAdd>
+
         <div className="container section">
           <div className="columns">
             <div className="column is-12">
+
+            total : {this.state.todos.length}
               {this.state.todos.map(todo => (
                 <TodoItem
                 key={todo.todoId}
