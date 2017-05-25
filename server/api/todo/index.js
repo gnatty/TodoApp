@@ -9,6 +9,7 @@ router.get('/getall', todoController.getAll)
 router.get('/getone/:todoId', todoController.getOne)
 router.post('/create', todoController.create)
 router.post('/update', todoController.update)
+router.post('/updatedone', todoController.updateDone)
 router.post('/delete', todoController.delete)
 
 module.exports = router

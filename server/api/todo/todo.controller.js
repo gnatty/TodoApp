@@ -10,7 +10,7 @@ const TodoController = {
   },
 
   getAll: (req, res) => {
-    let query = todo.find().select('todoId description').sort({ todoId: -1 })
+    let query = todo.find().select('todoId description done').sort({ todoId: -1 })
     query.exec((err, todos) => {
       let nextCursor = todos.length
       if (todos.length == maxItemsPerPage) nextCursor +1
@@ -23,7 +23,7 @@ const TodoController = {
   },
 
   getOne: (req, res) => {
-    let query = todo.findOne({todoId: req.params.todoId}).select('todoId description')
+    let query = todo.findOne({todoId: req.params.todoId}).select('todoId description done')
     query.exec((err, todo) => {
       if (todo == null) res.status(500).json({status: 500, message: "Item not found"})
       else res.json(todo)
@@ -46,6 +46,13 @@ const TodoController = {
 
   update: (req, res) => {
     todo.update({ todoId: req.body.todoId }, { $set: { description: req.body.description }}, () => {
+      res.json("ok")
+    })
+  },
+
+  updateDone: (req, res) => {
+    console.log(req.body.done)
+    todo.update({ todoId: req.body.todoId }, { $set: { done: req.body.done }}, () => {
       res.json("ok")
     })
   },

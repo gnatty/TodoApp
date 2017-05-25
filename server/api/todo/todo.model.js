@@ -6,7 +6,11 @@ const autoIncrement = require('mongoose-auto-increment')
 
 var TodoSchema = new Schema({
   todoId: Number,
-  description: String
+  description: String,
+  done: {
+    type: Boolean,
+    default: false
+  }
 })
 
 autoIncrement.initialize(mongoose);

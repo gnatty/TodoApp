@@ -11,9 +11,13 @@ class TodoButtonAdd extends Component {
     this.onChange = this.onChange.bind(this)
     this.handleChange = this.handleChange.bind(this)
     this.createTodo = this.createTodo.bind(this)
+    this.totalItems = this.totalItems.bind(this)
+    this.setDisplayType = this.setDisplayType.bind(this)
+    this.setClassAction = this.setClassAction.bind(this)
 
     this.state = {
-      description: ''
+      description: '',
+      displayType: 'all'
     }
 
   }
@@ -36,8 +40,29 @@ class TodoButtonAdd extends Component {
     TodosActions.create(this.state.description)
   }
 
-  onChange() {
+  totalItems() {
+    let total = this.props.totalItems
+    if (total === 0) {
+      return (<b>0 post</b>)
+    }
+    return (<b>{total} posts</b>)
+  }
 
+  setDisplayType(type) {
+    TodosActions.setDisplayType(type)
+  }
+
+  setClassAction(type) {
+    if(this.state.displayType == type) {
+      return "button is-success"
+    }
+    return ""
+  }
+
+  onChange() {
+    this.setState({
+      displayType: TodosStore.getDisplayType()
+    })
   }
 
   render() {
@@ -46,7 +71,7 @@ class TodoButtonAdd extends Component {
         <nav className="level">
         <div className="level-left">
           <div className="level-item">
-            <p className="subtitle is-5">0 post</p>
+            <p className="subtitle is-5">{this.totalItems()}</p>
           </div>
           <div className="level-item">
             <div className="field has-addons">
@@ -60,8 +85,9 @@ class TodoButtonAdd extends Component {
           </div>
         </div>
         <div className="level-right">
-          <p className="level-item"><strong>All</strong></p>
-          <p className="level-item"><a>Done</a></p>
+          <p className="level-item" onClick={() => this.setDisplayType("all")}><b className={this.setClassAction("all")}>All</b></p>
+          <p className="level-item" onClick={() => this.setDisplayType("done")}><b className={this.setClassAction("done")}> Done</b></p>
+          <p className="level-item" onClick={() => this.setDisplayType("notdone")}><b className={this.setClassAction("notdone")}>NotDone</b></p>
         </div>
         </nav>
       </div>

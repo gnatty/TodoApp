@@ -13,10 +13,12 @@ class Todo extends Component {
     super(props)
 
     this.state = {
-      todos: []
+      todos: [],
+      displayType: 'all'
     }
 
     this.onChange = this.onChange.bind(this)
+    this.displayTodos = this.displayTodos.bind(this)
   }
 
   componentWillMount() {
@@ -33,22 +35,43 @@ class Todo extends Component {
 
   onChange() {
     this.setState({
-      todos: TodosStore.getTodos()
+      todos: TodosStore.getTodos(),
+      displayType: TodosStore.getDisplayType()
     })
+  }
+
+  displayTodos() {
+    let displayTodos = []
+    switch(this.state.displayType) {
+      case 'all':
+        displayTodos = this.state.todos
+      break;
+
+      case 'done':
+        displayTodos = this.state.todos.filter(function(el) {
+          return el.done === true
+        })
+      break;
+
+      case 'notdone':
+        displayTodos = this.state.todos.filter(function(el) {
+          return el.done === false
+        })
+      break;
+    }
+    return displayTodos
   }
 
   render() {
     return (
       <div className="Todo">
 
-        <TodoButtonAdd></TodoButtonAdd>
+        <TodoButtonAdd totalItems={this.state.todos.length}></TodoButtonAdd>
 
         <div className="container section">
           <div className="columns">
             <div className="column is-12">
-
-            total : {this.state.todos.length}
-              {this.state.todos.map(todo => (
+              {this.displayTodos().map(todo => (
                 <TodoItem
                 key={todo.todoId}
                 todo={todo}

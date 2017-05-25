@@ -7,7 +7,8 @@ const tc = {
   getall: 'getall',
   create: 'create',
   update: 'update',
-  delete: 'delete'
+  delete: 'delete',
+  update_done: 'updatedone'
 }
 
 export default {
@@ -51,11 +52,34 @@ export default {
     })
   },
 
+  updateDone: (todoId, done) => {
+    request
+    .post(tc.host + tc.update_done)
+    .send({
+      todoId: todoId,
+      done: done
+    })
+    .end(function(err, data){
+      if(err) {
+        AppDispatcher.dispatch({
+          actionType: TodosConstants.UPDATE_DONE_ERROR,
+          message: err
+        })
+      } else {
+        AppDispatcher.dispatch({
+          actionType: TodosConstants.UPDATE_DONE,
+          todoId: todoId,
+          done: done
+        })
+      }
+    })
+  },
+
   delete: (todoId) => {
     request
     .post(tc.host + tc.delete)
     .send({
-      todoId: todoId
+      todoId: todoId,
     })
     .end(function(err, data){
       if(err) {
@@ -69,6 +93,13 @@ export default {
           todoId: todoId
         })
       }
+    })
+  },
+
+  setDisplayType: (type) => {
+    AppDispatcher.dispatch({
+      actionType: TodosConstants.SET_DISPLAY_TYPE,
+      type: type
     })
   }
 

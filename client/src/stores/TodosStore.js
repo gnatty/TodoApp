@@ -5,6 +5,15 @@ import { EventEmitter } from 'events'
 const CHANGE_EVENT = 'change'
 
 let _todos = []
+let _displayType = 'all';
+
+function getDisplayType() {
+  return _displayType;
+}
+
+function setDisplayType(displayType) {
+  _displayType = displayType
+}
 
 function setTodos(todos) {
   _todos = todos
@@ -18,6 +27,13 @@ function deleteTodo(todoId) {
   _todos = _todos.filter(function(el) {
     return el.todoId !== todoId
   })
+}
+
+function updateDone(todoId, done) {
+  let todoIndex = _todos.findIndex(function(el) {
+    return el.todoId === todoId
+  })
+  _todos[todoIndex].done = done
 }
 
 class TodosStoreClass extends EventEmitter {
@@ -36,6 +52,10 @@ class TodosStoreClass extends EventEmitter {
 
   getTodos() {
     return _todos
+  }
+
+  getDisplayType() {
+    return _displayType
   }
 
 }
@@ -73,6 +93,21 @@ TodosStore.dispatchToken = AppDispatcher.register(action => {
 
     case TodosConstants.DELETE_ERROR:
       // (..)
+      TodosStore.emitChange()
+    break;
+
+    case TodosConstants.UPDATE_DONE:
+      updateDone(action.todoId, action.done)
+      TodosStore.emitChange()
+    break;
+
+    case TodosConstants.UPDATE_DONE_ERROR:
+      // (..)
+      TodosStore.emitChange()
+    break;
+
+    case TodosConstants.SET_DISPLAY_TYPE:
+      setDisplayType(action.type)
       TodosStore.emitChange()
     break;
 
