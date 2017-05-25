@@ -12,6 +12,13 @@ class TodoItem extends Component {
     this.delete = this.delete.bind(this)
     this.updateDone = this.updateDone.bind(this)
     this.iconeDone = this.iconeDone.bind(this)
+    this.editTodo = this.editTodo.bind(this)
+    this.saveChangeTodo = this.saveChangeTodo.bind(this)
+    this.actionEdit = this.actionEdit.bind(this)
+
+    this.state = {
+      edit: false
+    }
 
   }
 
@@ -36,6 +43,49 @@ class TodoItem extends Component {
     return this.props.todo.done === true ? "fa fa-check-circle-o" : "fa fa-circle-o";
   }
 
+  saveChangeTodo(e) {
+    e.preventDefault();
+    TodosActions.updateDescription(this.props.todo.todoId, this.refs.description.value)
+    this.setState({
+      edit: false
+    })
+  }
+
+  actionEdit(e) {
+    e.preventDefault();
+    if(this.state.edit) {
+      this.setState({
+        edit: false
+      })
+    } else {
+      this.setState({
+        edit: true
+      })
+    }
+  }
+
+  editTodo() {
+    if (this.state.edit === true) {
+      return (
+        <form>
+        <div className="field has-addons">
+          <p className="control is-expanded">
+            <input className="input" type="text" ref="description" defaultValue={this.props.todo.description}/>
+          </p>
+
+          <p className="control">
+            <button type="submit" className="button is-info" onClick={this.saveChangeTodo}>Save</button>
+          </p>
+          <p className="control">
+            <button type="submit" className="button is-danger">Cancel</button>
+          </p>
+        </div>
+        </form>
+      )
+    }
+    return this.props.todo.description
+  }
+
   onChange() {
 
   }
@@ -46,9 +96,13 @@ class TodoItem extends Component {
       <div className="level-left">
         <div className="level-item">
           <span className="panel-icon" onClick={this.delete}>
-            <i className="fa fa-close"></i>
+            <i className="fa fa-trash"></i>
           </span>
-          {this.props.todo.description}
+          <span className="panel-icon" onClick={this.actionEdit}>
+            <i className="fa fa-pencil"></i>
+          </span>
+
+          {this.editTodo()}
         </div>
       </div>
       <div className="level-right">

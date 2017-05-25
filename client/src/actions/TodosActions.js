@@ -6,9 +6,9 @@ const tc = {
   host: 'http://127.0.0.1:3031/todo/',
   getall: 'getall',
   create: 'create',
-  update: 'update',
-  delete: 'delete',
-  update_done: 'updatedone'
+  update_description: 'update',
+  update_done: 'updatedone',
+  delete: 'delete'
 }
 
 export default {
@@ -52,6 +52,29 @@ export default {
     })
   },
 
+  updateDescription: (todoId, description) => {
+    request
+    .post(tc.host + tc.update_description)
+    .send({
+      todoId: todoId,
+      description: description
+    })
+    .end(function(err, data){
+      if(err) {
+        AppDispatcher.dispatch({
+          actionType: TodosConstants.UPDATE_DESCRIPTION_ERROR,
+          message: err
+        })
+      } else {
+        AppDispatcher.dispatch({
+          actionType: TodosConstants.UPDATE_DESCRIPTION,
+          todoId: todoId,
+          description: description
+        })
+      }
+    })
+  },
+  
   updateDone: (todoId, done) => {
     request
     .post(tc.host + tc.update_done)

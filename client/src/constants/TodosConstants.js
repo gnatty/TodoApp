@@ -7,6 +7,8 @@ export default KeyMirror({
   CREATE_ERROR: null,
   UPDATE_DONE: null,
   UPDATE_DONE_ERROR: null,
+  UPDATE_DESCRIPTION: null,
+  UPDATE_DESCRIPTION_ERROR: null,
   DELETE: null,
   DELETE_ERROR: null,
   SET_DISPLAY_TYPE: null

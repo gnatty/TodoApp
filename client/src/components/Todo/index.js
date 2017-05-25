@@ -68,7 +68,9 @@ class Todo extends Component {
 
         <TodoButtonAdd totalItems={this.state.todos.length}></TodoButtonAdd>
 
+
         <div className="container section">
+
           <div className="columns">
             <div className="column is-12">
               {this.displayTodos().map(todo => (

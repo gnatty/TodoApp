@@ -36,6 +36,13 @@ function updateDone(todoId, done) {
   _todos[todoIndex].done = done
 }
 
+function updateDescription(todoId, description) {
+  let todoIndex = _todos.findIndex(function(el) {
+    return el.todoId === todoId
+  })
+  _todos[todoIndex].description = description
+}
+
 class TodosStoreClass extends EventEmitter {
 
   emitChange() {
@@ -108,6 +115,16 @@ TodosStore.dispatchToken = AppDispatcher.register(action => {
 
     case TodosConstants.SET_DISPLAY_TYPE:
       setDisplayType(action.type)
+      TodosStore.emitChange()
+    break;
+
+    case TodosConstants.UPDATE_DESCRIPTION:
+      updateDescription(action.todoId, action.description)
+      TodosStore.emitChange()
+    break;
+
+    case TodosConstants.UPDATE_DESCRIPTION_ERROR:
+
       TodosStore.emitChange()
     break;
 
