@@ -2,6 +2,8 @@
 
 ## Client - front end
 
+### Description des actions
+
 - Écran de chargement
 - Affichage des données
 - Gestion des catégories
@@ -14,14 +16,17 @@
 
 ## Server - back end
 
-| METHOD    | PATH                    | PARAM
-| ---       | ---                     | --
-| GET       | /todo/ping              | NULL
-| GET       | /todo/getall            | NULL
-| GET       | /todo/getone/:todoID    | todoId
-| POST      | /todo/create            | todoId, description
-| POST      | /todo/updatedone        | todoId, done
-| POST      | /todo/delete            | todoId
+### Description des actions
+
+- Test du fonctionnement
+- Récupération des tâches
+- Récupération d'une tâche par son todoID
+- Création d'une nouvelle tâche
+- Modification de la description d'une tâche
+- Modification de l'état d'une tâche
+- Suppression d'une tâche
+
+
 
 ## Démarrer l'application
 
