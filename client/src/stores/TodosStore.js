@@ -7,6 +7,15 @@ const CHANGE_EVENT = 'change'
 let _todos = []
 let _displayType = 'all';
 let _notification = [];
+let _loading = true;
+
+function getLoading() {
+  return _loading;
+}
+
+function setLoading(etat) {
+  _loading = etat
+}
 
 function getNotification() {
   return _notification;
@@ -79,6 +88,10 @@ class TodosStoreClass extends EventEmitter {
     return _notification
   }
 
+  getLoading() {
+    return _loading
+  }
+
 }
 
 const TodosStore = new TodosStoreClass();
@@ -89,6 +102,7 @@ TodosStore.dispatchToken = AppDispatcher.register(action => {
 
     case TodosConstants.GET_ALL:
       setTodos(action.todos)
+      setLoading(false)
       TodosStore.emitChange()
     break;
 

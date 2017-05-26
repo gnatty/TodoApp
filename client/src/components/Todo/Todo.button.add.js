@@ -53,7 +53,7 @@ class TodoButtonAdd extends Component {
   }
 
   setClassAction(type) {
-    if(this.state.displayType == type) {
+    if(this.state.displayType === type) {
       return "button is-success"
     }
     return ""

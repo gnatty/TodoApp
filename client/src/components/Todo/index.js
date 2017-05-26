@@ -10,6 +10,7 @@ import TodosStore from '../../stores/TodosStore'
 
 import TodoItem from './Todo.item'
 import TodoButtonAdd from './Todo.button.add'
+import TodoLoader from './Todo.Loader'
 
 
 class Todo extends Component {
@@ -20,7 +21,8 @@ class Todo extends Component {
     this.state = {
       todos: [],
       displayType: 'all',
-      notification: []
+      notification: [],
+      loading: true
     }
 
     this.onChange = this.onChange.bind(this)
@@ -46,7 +48,8 @@ class Todo extends Component {
     this.setState({
       todos: TodosStore.getTodos(),
       displayType: TodosStore.getDisplayType(),
-      notification: TodosStore.getNotification()
+      notification: TodosStore.getNotification(),
+      loading: TodosStore.getLoading()
     })
 
     /**
@@ -72,6 +75,8 @@ class Todo extends Component {
         timeout: 2000
       });
     break;
+
+    default:
     }
     this.setState({
       notification: []
@@ -97,34 +102,38 @@ class Todo extends Component {
           return el.done === false
         })
       break;
+
+      default:
     }
     return displayTodos
   }
 
   render() {
-    return (
-      <div className="Todo">
+    if (this.state.loading) {
+      return (<TodoLoader/>)
+    } else {
+      return (
+        <div className="Todo">
 
-        <Alert stack={{limit: 3}} />
+          <Alert stack={{limit: 3}} />
+          <TodoButtonAdd totalItems={this.state.todos.length}></TodoButtonAdd>
 
-        <TodoButtonAdd totalItems={this.state.todos.length}></TodoButtonAdd>
-
-        <div className="container section">
-
-          <div className="columns">
-            <div className="column is-12">
-              {this.displayTodos().map(todo => (
-                <TodoItem
-                key={todo.todoId}
-                todo={todo}
-                handler={this.state.handler}
-                />
-              ))}
+          <div className="container section">
+            <div className="columns">
+              <div className="column is-12">
+                {this.displayTodos().map(todo => (
+                  <TodoItem
+                  key={todo.todoId}
+                  todo={todo}
+                  handler={this.state.handler}
+                  />
+                ))}
+              </div>
             </div>
           </div>
         </div>
-      </div>
-    )
+      )
+    }
   }
 }
 
