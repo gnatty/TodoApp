@@ -14,6 +14,10 @@
 - Gestion des erreurs
 - Gestion des actions avec affichage d'une notifcation
 
+### Actions à créer
+
+- Pagination de l'affichage des données
+
 ## Server - back end
 
 ### Description des actions
@@ -26,15 +30,12 @@
 - Modification de l'état d'une tâche
 - Suppression d'une tâche
 
+### Actions à créer
+
+- Pagination des tâches à récupérer
 
 
 ## Démarrer l'application
-
-- Sous mac os
-
-`npm run start`
-
-- Pour les autres systèmes
 
 ### MongoDb
 `mongod --port 3300 --dbpath 'your_db_path'`
