@@ -23,13 +23,14 @@
 | POST      | /todo/updatedone        | todoId, done
 | POST      | /todo/delete            | todoId
 
+## Démarrer l'application
 
-# Start app
+- Sous mac os
 
-## On MacOs
 `npm run start`
 
-## Others
+- Pour les autres systèmes
+
 ### MongoDb
 `mongod --port 3300 --dbpath 'your_db_path'`
 ### Server
