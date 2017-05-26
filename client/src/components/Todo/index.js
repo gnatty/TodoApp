@@ -1,11 +1,16 @@
 import React, { Component } from 'react'
+import Alert from 'react-s-alert';
+
 import './Todo.css'
-import TodoItem from './Todo.item'
+import 'react-s-alert/dist/s-alert-default.css';
+import 'react-s-alert/dist/s-alert-css-effects/jelly.css';
 
 import TodosActions from '../../actions/TodosActions'
 import TodosStore from '../../stores/TodosStore'
 
+import TodoItem from './Todo.item'
 import TodoButtonAdd from './Todo.button.add'
+
 
 class Todo extends Component {
 
@@ -14,12 +19,16 @@ class Todo extends Component {
 
     this.state = {
       todos: [],
-      displayType: 'all'
+      displayType: 'all',
+      notification: []
     }
 
     this.onChange = this.onChange.bind(this)
     this.displayTodos = this.displayTodos.bind(this)
+    this.createNotification = this.createNotification.bind(this)
+
   }
+
 
   componentWillMount() {
     TodosStore.addChangeListener(this.onChange)
@@ -36,11 +45,41 @@ class Todo extends Component {
   onChange() {
     this.setState({
       todos: TodosStore.getTodos(),
-      displayType: TodosStore.getDisplayType()
+      displayType: TodosStore.getDisplayType(),
+      notification: TodosStore.getNotification()
+    })
+
+    /**
+    * Notification here
+    */
+    this.createNotification()
+  }
+
+  createNotification() {
+    switch(this.state.notification.type) {
+      case 'SUCCESS':
+        Alert.info(this.state.notification.message, {
+          position: 'bottom-right',
+          effect: 'bouncyflip',
+          timeout: 2000
+        });
+      break;
+
+      case 'ERROR':
+      Alert.error(this.state.notification.message, {
+        position: 'bottom-right',
+        effect: 'bouncyflip',
+        timeout: 2000
+      });
+    break;
+    }
+    this.setState({
+      notification: []
     })
   }
 
   displayTodos() {
+
     let displayTodos = []
     switch(this.state.displayType) {
       case 'all':
@@ -66,8 +105,9 @@ class Todo extends Component {
     return (
       <div className="Todo">
 
-        <TodoButtonAdd totalItems={this.state.todos.length}></TodoButtonAdd>
+        <Alert stack={{limit: 3}} />
 
+        <TodoButtonAdd totalItems={this.state.todos.length}></TodoButtonAdd>
 
         <div className="container section">
 

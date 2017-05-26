@@ -6,6 +6,16 @@ const CHANGE_EVENT = 'change'
 
 let _todos = []
 let _displayType = 'all';
+let _notification = [];
+
+function getNotification() {
+  return _notification;
+}
+
+function setNotification(type, message) {
+  _notification.type = type
+  _notification.message = message
+}
 
 function getDisplayType() {
   return _displayType;
@@ -65,6 +75,10 @@ class TodosStoreClass extends EventEmitter {
     return _displayType
   }
 
+  getNotification() {
+    return _notification
+  }
+
 }
 
 const TodosStore = new TodosStoreClass();
@@ -79,37 +93,40 @@ TodosStore.dispatchToken = AppDispatcher.register(action => {
     break;
 
     case TodosConstants.GET_ALL_ERROR:
-      alert(action.message)
+      setNotification("ERROR", "database is not connected")
       TodosStore.emitChange();
     break;
 
     case TodosConstants.CREATE:
+      setNotification("SUCCESS", "new todo created")
       pushTodo(action.todo)
       TodosStore.emitChange()
     break;
 
     case TodosConstants.CREATE_ERROR:
-      // (..)
+      setNotification("ERROR", "database is not connected")
       TodosStore.emitChange()
     break;
 
     case TodosConstants.DELETE:
+      setNotification("SUCCESS", "todo removed")
       deleteTodo(action.todoId)
       TodosStore.emitChange()
     break;
 
     case TodosConstants.DELETE_ERROR:
-      // (..)
+      setNotification("ERROR", "todo couldn't be removed")
       TodosStore.emitChange()
     break;
 
     case TodosConstants.UPDATE_DONE:
+      setNotification("SUCCESS", "todo's set to done")
       updateDone(action.todoId, action.done)
       TodosStore.emitChange()
     break;
 
     case TodosConstants.UPDATE_DONE_ERROR:
-      // (..)
+      setNotification("ERROR", "todo's set to notDone")
       TodosStore.emitChange()
     break;
 
@@ -119,12 +136,13 @@ TodosStore.dispatchToken = AppDispatcher.register(action => {
     break;
 
     case TodosConstants.UPDATE_DESCRIPTION:
+      setNotification("SUCCESS", "todo's description updated")
       updateDescription(action.todoId, action.description)
       TodosStore.emitChange()
     break;
 
     case TodosConstants.UPDATE_DESCRIPTION_ERROR:
-
+      setNotification("ERROR", "error while editing todo's description")
       TodosStore.emitChange()
     break;
 
