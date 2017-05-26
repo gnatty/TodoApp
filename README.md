@@ -1,6 +1,6 @@
 # TodoApp
 
-## Client
+## Client - front end
 
 - Écran de chargement
 - Affichage des données
@@ -12,7 +12,7 @@
 - Gestion des erreurs
 - Gestion des actions avec affichage d'une notifcation
 
-## Server
+## Server - back end
 
 | METHOD    | PATH                    | PARAM
 | ---       | ---                     | --
@@ -20,7 +20,7 @@
 | GET       | /todo/getall            | NULL
 | GET       | /todo/getone/:todoID    | todoId
 | POST      | /todo/create            | todoId, description
-| POST      | /todo/update            | todoId, description
+| POST      | /todo/updatedone        | todoId, done
 | POST      | /todo/delete            | todoId
 
 
