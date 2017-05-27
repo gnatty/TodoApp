@@ -1,5 +1,7 @@
 # TodoApp
 
+![](https://raw.githubusercontent.com/muporash/TodoApp/master/docs/img/screenshot.png)
+
 ## Client - front end
 
 ### Description des actions

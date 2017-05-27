@@ -92,15 +92,11 @@ class Todo extends Component {
       break;
 
       case 'done':
-        displayTodos = this.state.todos.filter(function(el) {
-          return el.done === true
-        })
+        displayTodos = this.state.todos.filter(t => t.done)
       break;
 
       case 'notdone':
-        displayTodos = this.state.todos.filter(function(el) {
-          return el.done === false
-        })
+        displayTodos = this.state.todos.filter(t => !t.done)
       break;
 
       default:
