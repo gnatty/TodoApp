@@ -74,7 +74,7 @@ export default {
       }
     })
   },
-  
+
   updateDone: (todoId, done) => {
     request
     .post(tc.host + tc.update_done)

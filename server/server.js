@@ -7,7 +7,7 @@ const bodyParser = require('body-parser')
 // Files
 const routes = require('./routes')
 
-mongoose.connect('mongodb://localhost:3300/database')
+mongoose.connect('mongodb://root:root@ds151631.mlab.com:51631/todoapp')
 
 mongoose.connection.on('connected', () => {
   console.log('Mongoose default connection opened')
